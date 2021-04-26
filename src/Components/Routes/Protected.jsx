@@ -23,9 +23,14 @@ const Protected = ({ component: Component, ...rest }) => {
 
     axios.post('http://localhost:4000/api/users/verifyToken', null, config)
       .then(respond => {
-
+        console.log(respond.data);
         if (respond.data.code === 'token/verify') {
           sessionStorage.setItem('verifyToken', true);
+
+          //guardar el rol del usuario
+          //respond.data.role
+
+          
         } else {
           History.push('/login');
         }

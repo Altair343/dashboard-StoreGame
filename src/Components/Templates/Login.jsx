@@ -32,6 +32,10 @@ const Login = () => {
       if (data.response === true) {
         localStorage.setItem('token', data.token);
         sessionStorage.setItem('verifyToken',true);
+
+        //guardar el rol del usuario
+          // data.role
+
         History.push('/');
         
       }
