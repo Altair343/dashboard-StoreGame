@@ -25,13 +25,21 @@ const Protected = ({ component: Component, ...rest }) => {
       .then(respond => {
         console.log(respond.data);
         if (respond.data.code === 'token/verify') {
-          sessionStorage.setItem('verifyToken', true);
 
-          //guardar el rol del usuario
-          //respond.data.role
+           if (respond.data.data.role === 'admin') {
+            sessionStorage.setItem('verifyToken', true);
+            //guardar el rol del usuario
+            //respond.data.role
 
-          
+          } else {
+            window.localStorage.clear();
+            window.sessionStorage.clear();
+            History.push('/login'); 
+          } 
+
         } else {
+          window.localStorage.clear();
+          window.sessionStorage.clear();
           History.push('/login');
         }
       })
@@ -41,6 +49,8 @@ const Protected = ({ component: Component, ...rest }) => {
         History.push('/login');
       })
   }
+
+//validamos el rol
 
   return <Route {...rest} component={Component} />
 }

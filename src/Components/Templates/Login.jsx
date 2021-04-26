@@ -30,14 +30,21 @@ const Login = () => {
       const { data } = await axios.post(baseUrl, credentialsUser);
 
       if (data.response === true) {
-        localStorage.setItem('token', data.token);
-        sessionStorage.setItem('verifyToken',true);
+        const rolesUser = data.role;
 
-        //guardar el rol del usuario
-          // data.role
+        for (let i = 0; i < rolesUser.length; i++) {
+          if (rolesUser[i] === "admin") {
+            localStorage.setItem('token', data.token);
+            sessionStorage.setItem('verifyToken', true);
 
-        History.push('/');
-        
+            //guardar el rol del usuario en estado global
+            // data.role
+
+            History.push('/');
+          }else{
+            setMessageError('No tiene el rol de administrador');
+          }
+        }
       }
 
     } catch (error) {
@@ -49,7 +56,7 @@ const Login = () => {
         setMessageError('contraseña incorrecta');
       } else if (code === 'auth/global-error') {
         setMessageError('Ocurrio un error no previsto con nuestros servidores intentelo de nuevo o mas tarde');
-      }else{
+      } else {
         setMessageError('Ocurrio un error');
       }
     }
