@@ -23,19 +23,19 @@ const Protected = ({ component: Component, ...rest }) => {
 
     axios.post('http://localhost:4000/api/users/verifyToken', null, config)
       .then(respond => {
-        console.log(respond.data);
+
+        //entra al if si el token es valido
         if (respond.data.code === 'token/verify') {
+          sessionStorage.setItem('verifyToken', true);
 
-           if (respond.data.data.role === 'admin') {
-            sessionStorage.setItem('verifyToken', true);
-            //guardar el rol del usuario
-            //respond.data.role
-
+        //pregunta por el rol del token si es admin
+          if (respond.data.data.role === 'admin') {  
+            sessionStorage.setItem('roleUser', respond.data.data.role);
           } else {
             window.localStorage.clear();
             window.sessionStorage.clear();
-            History.push('/login'); 
-          } 
+            History.push('/login');
+          }
 
         } else {
           window.localStorage.clear();
@@ -48,11 +48,17 @@ const Protected = ({ component: Component, ...rest }) => {
         window.sessionStorage.clear();
         History.push('/login');
       })
+  }else{
+    const roleUser = window.sessionStorage.getItem('roleUser');
+    if(roleUser !== 'admin'){
+      window.localStorage.clear();
+        window.sessionStorage.clear();
+        History.push('/login');
+    }
   }
-
-//validamos el rol
 
   return <Route {...rest} component={Component} />
 }
+
 
 export default Protected;

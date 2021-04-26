@@ -36,11 +36,9 @@ const Login = () => {
           if (rolesUser[i] === "admin") {
             localStorage.setItem('token', data.token);
             sessionStorage.setItem('verifyToken', true);
-
-            //guardar el rol del usuario en estado global
-            // data.role
-
+            sessionStorage.setItem('roleUser', rolesUser[i]); 
             History.push('/');
+
           }else{
             setMessageError('No tiene el rol de administrador');
           }
@@ -48,8 +46,7 @@ const Login = () => {
       }
 
     } catch (error) {
-      const { code } = error.response.data;
-
+      const { code } = error.response.data; 
       if (code === 'auth/wrong-email') {
         setMessageError('Correo valido');
       } else if (code === 'auth/wrong-password') {
@@ -60,7 +57,7 @@ const Login = () => {
         setMessageError('Ocurrio un error');
       }
     }
-
+    
   }
 
   return (
@@ -90,5 +87,6 @@ const Login = () => {
     </>
   )
 }
+
 
 export default Login;
