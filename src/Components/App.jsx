@@ -6,6 +6,7 @@ import Public from './Routes/Public';
 
 import Home from './Templates/Home';
 import Login from './Templates/Login';
+import Error404 from './Templates/Error404';
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Protected path="/" exact component={Home} />
 
         <Public path="/login" exact component={Login} />
+        
+        <Route component={Error404} />
       </Switch>
     </Router>
   );
