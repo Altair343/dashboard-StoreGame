@@ -57,36 +57,37 @@ const Login = () => {
         setMessageError('Ocurrio un error');
       }
     }
-
   }
 
   return (
-    <div className="container">
-      <div className="row">
+    <div className="container align-items-center">
+      <div className="grid col-3 row-1">
         <div className="col"></div>
         <div className="col">
-          <form>
-            <div className="mb-3">
-              <input onChange={(e) => setEmail(e.target.value)} className="form-control" type="email" placeholder="Correo" />
-            </div>
-            <div className="form-content">
-              <input onChange={(e) => setPassword(e.target.value)} className="form-control" type="password" placeholder="Contraseña" />
-            </div>
-            <div className="">
-              <button onClick={authentication} type="submit" className="btn btn-dark">Iniciar sesión</button>
-            </div>
-            <div>
-              {
-                messageError != null
-                  ? (
-                    <div className="alert alert-danger">
-                      {messageError}
-                    </div>
-                  )
-                  : ``
-              }
-            </div>
-          </form>
+          <div>
+            <form>
+              <div className="mb-3">
+                <input onChange={(e) => setEmail(e.target.value)} className="form-control" type="email" placeholder="Correo" />
+              </div>
+              <div className="mb-3">
+                <input onChange={(e) => setPassword(e.target.value)} className="form-control" type="password" placeholder="Contraseña" />
+              </div>
+              <div className="mb-3">
+                <button onClick={authentication} type="submit" className="btn btn-dark w-100">Iniciar sesión</button>
+              </div>
+              <div>
+                {
+                  messageError != null
+                    ? (
+                      <div className="alert alert-danger">
+                        {messageError}
+                      </div>
+                    )
+                    : ``
+                }
+              </div>
+            </form>
+          </div>
         </div>
         <div className="col"></div>
       </div>

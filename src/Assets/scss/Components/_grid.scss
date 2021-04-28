@@ -1,2 +1,28 @@
+.grid {
+  flex: 1 0 0%;
+  @include make-grid();
+}
 
+.col{
+flex: 1 0 0%; 
+}
 
+@for $var from 1 to $grid-columns +1 {
+  .col-#{$var}{
+    grid-template-columns: repeat($var,1fr);
+
+    @include fromMax(s){
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@for $var from 1 to $grid-row-columns+1 {
+  .row-#{$var}{
+    grid-template-rows: repeat($var,1fr);
+
+    @include fromMax(s){
+      grid-template-rows: 1fr;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.align-items-center {
+  align-items: center !important;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.align-items-center {
+  align-items: center!important;
+}
+
+
+@each $spacer, $value in $spacers {
+  .mt-#{$spacer} {
+    margin-top: $value;
+  }
+
+  .ml-#{$spacer} {
+    margin-left: $value;
+  }
+
+  .mr-#{$spacer} {
+    margin-right: $value;
+  }
+
+  .mb-#{$spacer} {
+    margin-bottom: $value;
+  }
+}

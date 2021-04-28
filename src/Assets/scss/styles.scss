@@ -1,10 +1,12 @@
 @import "mixins/screen";
 @import "mixins/buttons";
 @import "mixins/container";
+@import "mixins/grid";
 
 @import "config/variables";
 @import "base/base";
 
+@import "Components/utilities";
 @import "Components/forms";
 @import "Components/buttons";
 @import "Components/grid";
