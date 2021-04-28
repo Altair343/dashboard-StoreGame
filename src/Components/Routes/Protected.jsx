@@ -6,7 +6,7 @@ const Protected = ({ component: Component, ...rest }) => {
   const History = useHistory();
 
   // Verificamos si existe el token
-  const userLogged = window.localStorage.getItem('token')
+  const userLogged = window.localStorage.getItem('token');
   if (!userLogged) {
     return <Redirect to="/login" />
   }
