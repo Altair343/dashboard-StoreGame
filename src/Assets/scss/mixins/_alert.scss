@@ -1,0 +1,7 @@
+// scss-docs-start alert-variant-mixin
+@mixin alert-variant($background, $border, $color) {
+  color: $color;
+   background-color: $background;
+  border-color: $border;
+}
+// scss-docs-end alert-variant-mixin
