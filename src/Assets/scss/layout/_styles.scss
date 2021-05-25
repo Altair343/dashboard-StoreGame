@@ -1,0 +1,45 @@
+.data {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px 0 0 25px;
+  padding-left: 2rem;
+  padding-top: 1rem;
+  overflow: auto;
+  
+  @include fromMax(s) {
+    border-radius: 0;
+    padding: 0;
+  }
+}
+
+.content-Vudeogames{
+  display: grid;
+  grid-gap: 1rem;
+
+  .cartGame{
+    border: 1px solid tomato;
+    display: flex ;
+    flex-direction: row;
+
+    .contentImg{
+      width: 120px;
+      height: 170px;
+      overflow: hidden;
+      margin-right: .5rem;
+    }
+
+    .contentInfo{
+      
+    }
+  }
+  
+}
+
+
+.actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

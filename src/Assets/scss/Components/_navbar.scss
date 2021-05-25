@@ -1,0 +1,57 @@
+.navbar {
+  display: flex;
+  
+  .content-logo {
+    color: crimson;
+    @include fromMax(s) {
+      display: none;
+    }
+  }
+
+  .nav {
+    display: flex;
+    padding-left: 0.7rem;
+    flex-direction: column;
+
+    .nav-item {
+      display: flex;
+      padding: 0.3rem 0;
+
+      .nav-link {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        color: $white;
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 0.7rem 0.5rem;
+        padding-right: 1rem;
+
+        .text-link{
+          padding-left: 1rem;
+        }
+      }
+
+      @include fromMin(s) {
+        &:hover {
+          .nav-link {
+           border-radius: 50px 0 0 50px;
+            color: $dark;
+            background-color: $white;
+          }
+        }
+      }
+    }
+
+    @include fromMax(s) {
+      width: 98.3%;
+      //width: 100%;
+      position: absolute;
+      justify-content: space-evenly;
+      flex-direction: row;
+      align-self: flex-end;
+      background-color: $dark;
+    }
+  }
+
+}

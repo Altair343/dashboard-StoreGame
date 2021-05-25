@@ -6,11 +6,32 @@
   width: 100%;
 }
 
-.flex-direction-row{
+.flex-row {
   flex-direction: row;
 }
 
+.flex-column {
+  flex-direction: column;
+}
 
+.pr-0 {
+  padding-right: 0 !important;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+.ocult {
+  display: block;
+
+  @include fromMax(s) {
+    display: none;
+  }
+}
+
+.background-withe{
+  background-color: $white;
+}
 @each $spacer, $value in $spacers {
   .mt-#{$spacer} {
     margin-top: $value;

@@ -60,7 +60,7 @@ const Login = () => {
   }
 
   return (
-    <div className="container align-items-center">
+    <div className="container align-items-center background-withe">
       <div className="grid col-3 row-1">
         <div className="col"></div>
         <div className="col">

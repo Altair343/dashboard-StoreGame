@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
 
 const Home = () => {
-    return (
-        <>
-            <h1>Home</h1>
-        </>
-    )
+  return (
+    <>
+      <div className="data background-withe">
+        <p>Home</p>
+      </div>
+    </>
+  )
 }
 
 export default Home;

@@ -7,6 +7,7 @@
 
 @import "config/variables";
 @import "config/functions";
+@import "Components/utilities";
 @import "base/base";
 
 @import "Components/forms";
@@ -14,6 +15,6 @@
 @import "Components/grid";
 @import "Components/containers";
 @import "Components/alert";
+@import "Components/navbar";
 
-@import "Components/utilities";
 @import "layout/styles";
