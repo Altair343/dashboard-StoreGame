@@ -8,6 +8,7 @@ import Home from './Templates/Home';
 import Login from './Templates/Login';
 import Products from './Templates/Products';
 import Error404 from './Templates/Error404';
+import Orders from './Templates/Orders';
 /* https://dribbble.com/shots/9642337-SoftwareCompany-Access-Requests */
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Switch>
         <Protected path="/" exact component={Home} />
         <Protected path="/all" component={Products} />
+        <Protected path="/orders" component={Orders} />
 
         <Public path="/login" exact component={Login} />
 

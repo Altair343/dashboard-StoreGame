@@ -16,7 +16,7 @@ const Navigation = () => {
             <Link className="nav-link" to="/all"><i className="fas fa-gamepad"></i> <span className="text-link ocult">Videogames</span></Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="#"> <i className="fas fa-archive"></i> <span className="text-link ocult">Orders</span></Link>
+            <Link className="nav-link" to="/orders"> <i className="fas fa-archive"></i> <span className="text-link ocult">Orders</span></Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="#"><i className="fas fa-cog"></i> <span className="text-link ocult">Settings</span></Link>

@@ -4,13 +4,15 @@ import thunk from "redux-thunk";
 
 import {
   roleReducer,
-  videogameReducer
+  videogameReducer,
+  ordersReducer
 } from "./reducers";
 
 export default createStore(
   combineReducers({
     roleReducer,
-    videogameReducer
+    videogameReducer,
+    ordersReducer
   }),
   composeWithDevTools(applyMiddleware(thunk))
 )
