@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from "react-redux";
-import store from '../../redux/store';
-import { getAllVideoGames } from '../../redux/actionCreators';
-import TargetVideogame from '../Molecules/TargetVideogame';
 import axios from "axios";
+import store from '../../redux/store';
+import TargetVideogame from '../Molecules/TargetVideogame';
+import { getAllVideoGames } from '../../redux/actionCreators';
+
+const baseUrl = 'http://localhost:4000/api/products';
+const userLogged = window.localStorage.getItem('token');
+const config = {
+  headers: {
+    Authorization: `Bearer ${userLogged}`,
+    'Content-type': 'multipart/form-data'
+  }
+}
 
 const Products = ({ match, videogames }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [categories, setCategories] = useState(["terror", "acción"]);
+  const [catOne, setCatOne] = useState('');
+  const [categories, setCategories] = useState([]);
   const [imgFile, setImgFile] = useState(null);
   const [idProduct, setIdProduct] = useState('');
-
-  const baseUrl = 'http://localhost:4000/api/products';
-  const userLogged = window.localStorage.getItem('token');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${userLogged}`,
-      'Content-type': 'multipart/form-data'
-    }
-  }
+  const refModal = useRef(null);
+  const refModal2 = useRef(null);
 
   const addGame = async (event) => {
     event.preventDefault();
@@ -36,11 +39,13 @@ const Products = ({ match, videogames }) => {
       const data = await axios.post(`${baseUrl}`, formData, config);
       if (data.data.response) {
         store.dispatch(getAllVideoGames());
+        refModal.current.style.display = "none";
         setTitle('');
         setDescription('');
         setPrice('');
-        setCategories('');
+        setCategories([]);
         setImgFile('');
+        setCatOne('');
       }
 
     } catch (error) {
@@ -52,7 +57,7 @@ const Products = ({ match, videogames }) => {
   const deletGame = async (id) => {
     axios.delete(`${baseUrl}/${id}`, config)
       .then(respond => {
-        alert('Nota Eliminada');
+        alert('Juego eliminado');
         store.dispatch(getAllVideoGames());
       })
       .catch(error => {
@@ -60,8 +65,8 @@ const Products = ({ match, videogames }) => {
       })
   }
 
-  const edit = async(id)=>{
-    
+  const edit = async (id) => {
+
     axios.get(`${baseUrl}/${id}`, config)
       .then(respond => {
         const dataProduct = respond.data.data;
@@ -70,13 +75,14 @@ const Products = ({ match, videogames }) => {
         setDescription(dataProduct.description);
         setPrice(dataProduct.price);
         setCategories(dataProduct.categories);
+        refModal2.current.style.display = "block";
       })
       .catch(error => {
         console.log(error.response);
       })
   }
 
-  const update = async(event)=>{
+  const update = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
@@ -103,6 +109,9 @@ const Products = ({ match, videogames }) => {
 
   }
 
+  const deletCategory = (id) => {
+    setCategories(categories.filter((item, key) => id !== key))
+  }
 
   useEffect(() => {
     store.dispatch(getAllVideoGames())
@@ -110,10 +119,22 @@ const Products = ({ match, videogames }) => {
 
   return (
     <div className="data background-withe">
-      <div>
+      <div className="barOptions">
         <h1>Productos</h1>
+        <div className="btnAction">
+          <button onClick={(e) => {
+            setTitle('');
+            setDescription('');
+            setPrice('');
+            setCategories([]);
+            setImgFile('');
+            setCatOne('');
+            refModal.current.style.display = "block";
+          }} className="btn btn-dark">Agregar</button>
+        </div>
       </div>
-      <div className="content-Vudeogames col-3">
+
+      <div className="content-Videogames col-2">
         {videogames &&
           videogames.map(t => (
             <TargetVideogame
@@ -130,49 +151,118 @@ const Products = ({ match, videogames }) => {
       </div>
 
       <div className="actions">
-        <div>
-          <p>agregar productos de forma provicional</p>
-          <form onSubmit={addGame} >
-            <div>
-              <input onChange={(e) => { setTitle(e.target.value) }} type="text" placeholder="Titulo" />
+        <div id="myModal" className="modal" ref={refModal}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4>Agregar Juego</h4>
+              <i onClick={() => {
+                refModal.current.style.display = "none";
+              }} className="fas fa-times close"></i>
             </div>
-            <div>
-              <input onChange={(e) => { setDescription(e.target.value) }} type="text" placeholder="descripción" />
+            <div className="modal-body">
+              <form onSubmit={addGame} >
+                <div className="mb-3">
+                  <input className="form-control" onChange={(e) => { setTitle(e.target.value) }} type="text" placeholder="Titulo" />
+                </div>
+                <div className="mb-3">
+                  <textarea
+                    className="form-control"
+                    onChange={(e) => { setDescription(e.target.value) }}
+                    type="text"
+                    placeholder="descripción"
+                    rows="4"
+                  ></textarea>
+                </div>
+                <div className="mb-3">
+                  <input className="form-control" onChange={(e) => { setPrice(e.target.value) }} type="text" placeholder="precio" />
+                </div>
+                <div className="mb-3 categories">
+                  <input className="form-control" type="text" onChange={(e) => { setCatOne(e.target.value) }} value={catOne} placeholder="Categorias" />
+                  <i onClick={() => {
+                    if (catOne.trim()) {
+                      setCategories([...categories, catOne]);
+                      setCatOne('');
+                    } else {
+                      alert("Categoria vacia")
+                    }
+                  }} className="fas fa-plus-square add"></i>
+                </div>
+                <div className="mb-3">
+                  {
+                    categories &&
+                    categories.map((item, id) => <span className="catego" key={id}>{item} <i onClick={() => { deletCategory(id) }} className="fas fa-times close"></i></span>)
+                  }
+                </div>
+                <div className="mb-3">
+                  <input className="form-control" onChange={(e) => { setImgFile(e.target.files[0]) }} type="file" accept="image/*" />
+                </div>
+
+                <div className="mb-3">
+                  <input type="submit" className="btn btn-dark w-100" value={`Guardar`} />
+                </div>
+              </form>
             </div>
-            <div>
-              <input onChange={(e) => { setPrice(e.target.value) }} type="text" placeholder="precio" />
-            </div>
-            <div>
-              <input onChange={(e) => { setImgFile(e.target.files[0]) }} type="file" accept="image/*" />
-            </div>
-            <div>
-              <input type="submit" className="btn btn-dark" value={`Guardar`} />
-            </div>
-          </form>
+          </div>
         </div>
 
-        <div>
-          <p>update productos de forma provicional</p>
-          <form onSubmit={update} >
-            <div>
-              <input onChange={(e) => { setTitle(e.target.value) }} value={title} type="text" placeholder="Titulo" />
+        <div id="myModal2" className="modal" ref={refModal2}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4>Editar {title}</h4>
+              <i onClick={() => {
+                refModal2.current.style.display = "none";
+              }} className="fas fa-times close"></i>
             </div>
-            <div>
-              <input onChange={(e) => { setDescription(e.target.value) }} value={description} type="text" placeholder="descripción" />
+            <div className="modal-body">
+              <form onSubmit={update} >
+                <div className="mb-3">
+                  <input className="form-control" onChange={(e) => { setTitle(e.target.value) }} value={title} type="text" placeholder="Titulo" />
+                </div>
+                <div className="mb-3">
+                  <textarea
+                    className="form-control"
+                    onChange={(e) => { setDescription(e.target.value) }}
+                    value={description}
+                    type="text"
+                    placeholder="descripción"
+                    rows="5"
+                  ></textarea>
+                </div>
+                <div className="mb-3">
+                  <input className="form-control" onChange={(e) => { setPrice(e.target.value) }} value={price} type="text" placeholder="precio" />
+                </div>
+                <div className="mb-3 categories">
+                  <input className="form-control" type="text" onChange={(e) => { setCatOne(e.target.value) }} value={catOne} placeholder="Categorias" />
+                  <i onClick={() => {
+                    if (catOne.trim()) {
+                      setCategories([...categories, catOne]);
+                      setCatOne('');
+                    } else {
+                      alert("Categoria vacia")
+                    }
+                  }} className="fas fa-plus-square add"></i>
+                </div>
+                <div className="mb-3">
+                  {
+                    categories &&
+                    categories.map((item, id) => <span className="catego" key={id}>{item} <i onClick={() => { deletCategory(id) }} className="fas fa-times close"></i></span>)
+                  }
+                </div>
+                <div className="mb-3">
+                  <input className="form-control" onChange={(e) => { setImgFile(e.target.files[0]) }} type="file" accept="image/*" />
+                </div>
+                <div className="mb-3">
+                  <input type="submit" className="btn btn-dark w-100" value={`Actualizar`} />
+                </div>
+              </form>
             </div>
-            <div>
-              <input onChange={(e) => { setPrice(e.target.value) }} value={price} type="text" placeholder="precio" />
-            </div>
-            <div>
-              <input onChange={(e) => { setImgFile(e.target.files[0]) }} type="file" accept="image/*" />
-            </div>
-            <div>
-              <input type="submit" className="btn btn-dark" value={`Actualizar`} />
-            </div>
-          </form>
+          </div>
         </div>
+
+
+
       </div>
-    </div>
+    </div >
   )
 }
 

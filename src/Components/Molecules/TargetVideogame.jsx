@@ -17,10 +17,13 @@ const TargetVideogame = ({ title, description, price, imgURL, categories, onclic
           <p>${price}</p>
         </div>
         <div className="cart-categories">
-          <p>{categories}</p>
+          {
+            categories &&
+            categories.map((e) => <span key={e} className="category">{e}</span>)
+          }
         </div>
         <div className="cart-actions">
-        
+
           <button type="button" className="btn btn-warning"
             onClick={onclicEdit}
           >Editar</button>

@@ -1,44 +1,124 @@
 .data {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 99%;
   height: 100%;
   border-radius: 25px 0 0 25px;
-  padding-left: 2rem;
+  padding-left: 1rem;
   padding-top: 1rem;
   overflow: auto;
-  
+  overflow-x: hidden;
+
   @include fromMax(s) {
     border-radius: 0;
     padding: 0;
   }
 }
 
-.content-Vudeogames{
+.barOptions {
+  display: flex;
+  flex-direction: row;
+}
+
+.content-Videogames {
   display: grid;
   grid-gap: 1rem;
 
-  .cartGame{
-    border: 1px solid tomato;
-    display: flex ;
-    flex-direction: row;
+  .cartGame {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 185px 1fr;
+    grid-gap: 1rem;
+    grid-template-rows: auto;
+    border: 1px solid $gray-400;
+    border-radius: 5px;
+    padding: 5px;
 
-    .contentImg{
-      width: 120px;
-      height: 170px;
+    .contentImg {
+      width: 180px;
+      height: 270px;
       overflow: hidden;
-      margin-right: .5rem;
+      margin-right: 0.5rem;
+      margin: 0 auto;
     }
 
-    .contentInfo{
-      
+    .contentInfo {
+      font-size: 0.8rem;
+
+      .cart-title {
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 0.5rem 0;
+      }
+
+      .cart-price {
+        font-weight: bold;
+        font-size: 0.9rem;
+        padding: 0.3rem 0;
+        padding-bottom: 0.5rem;
+      }
+    }
+
+    @include fromMax(l) {
+      grid-template-columns: 1fr;
     }
   }
-  
+
+  @include fromMax(l) {
+    grid-template-columns: 1fr;
+  }
 }
 
+.cart-categories {
+  display: flex;
+}
 
-.actions{
+.category {
+  padding: 3px 6px;
+  font-size: 0.7rem;
+  margin: 0 2px;
+  margin-bottom: 2px;
+  border-radius: 10px;
+  border: 1px solid $gray-600;
+  background-color: $gray-500;
+  color: $gray-800;
+  cursor: pointer;
+}
+
+.btnAction {
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.add {
+  font-size: 1.7rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.catego {
+  background-color: #2e7df5;
+  color: $white;
+  font-size: 0.8rem;
+  padding: 5px 8px;
+  margin: 0 3px;
+  border-radius: 15px;
+  cursor: pointer;
+  
+  &:hover{
+    background-color: #5999f8;
+  }
+}
+
+.actions {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
