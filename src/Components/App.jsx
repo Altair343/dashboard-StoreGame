@@ -6,10 +6,11 @@ import Public from './Routes/Public';
 import ViewNavbar from './middleware/ViewNavbar';
 import Home from './Templates/Home';
 import Login from './Templates/Login';
+import Register from './Templates/Register';
 import Products from './Templates/Products';
 import Error404 from './Templates/Error404';
 import Orders from './Templates/Orders';
-/* https://dribbble.com/shots/9642337-SoftwareCompany-Access-Requests */
+
 function App() {
   return (
     <Router>
@@ -20,6 +21,8 @@ function App() {
         <Protected path="/orders" component={Orders} />
 
         <Public path="/login" exact component={Login} />
+        <Public path="/register" exact component={Register} />
+
 
 
         <Route component={Error404} />

@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const Navigation = () => {
+  const History = useHistory();
+
   return (
     <>
       <nav className="navbar">
@@ -20,6 +22,13 @@ const Navigation = () => {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="#"><i className="fas fa-cog"></i> <span className="text-link ocult">Settings</span></Link>
+          </li>
+          <li className="nav-item">
+            <div className="nav-link"  onClick={()=>{
+              window.localStorage.clear();
+              window.sessionStorage.clear();
+              History.push('/login');
+            }}> <i class="fas fa-sign-out-alt"></i> <span className="text-link ocult">Logout</span></div>
           </li>
         </ul>
       </nav>

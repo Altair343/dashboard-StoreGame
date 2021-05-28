@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useHistory,Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
-const Login = () => {
+const Register = () => {
   const History = useHistory();
+  const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [messageError, setMessageError] = useState(null);
 
-  const authentication = async (e) => {
+  const register = async (e) => {
     e.preventDefault();
+    if (!userName.trim()) {
+      setMessageError('nombre de usuario vacio');
+      return;
+    }
 
     if (!email.trim()) {
       setMessageError('Correo vacio');
@@ -21,12 +26,14 @@ const Login = () => {
     }
 
     const credentialsUser = {
+      "username": userName,
       "email": email,
-      "password": password
+      "password": password,
+      "roles": ["admin"]
     }
 
     try {
-      const baseUrl = 'http://localhost:4000/api/auth/signin';
+      const baseUrl = 'http://localhost:4000/api/auth/signup';
       const { data } = await axios.post(baseUrl, credentialsUser);
 
       if (data.response === true) {
@@ -44,21 +51,13 @@ const Login = () => {
           }
         }
       }
-
     } catch (error) {
-      const { code } = error.response.data;
-      if (code === 'auth/wrong-email') {
-        setMessageError('Correo valido');
-      } else if (code === 'auth/wrong-password') {
-        setMessageError('contraseña incorrecta');
-      } else if (code === 'auth/global-error') {
-        setMessageError('Ocurrio un error no previsto con nuestros servidores intentelo de nuevo o mas tarde');
-      } else {
-        setMessageError('Ocurrio un error');
-      }
+      const er = error.response.data;
+      console.log(er);
     }
-  }
 
+
+  }
   return (
     <div className="container align-items-center background-withe">
       <div className="grid col-3 row-1">
@@ -67,13 +66,16 @@ const Login = () => {
           <div>
             <form>
               <div className="mb-3">
+                <input onChange={(e) => setUserName(e.target.value)} className="form-control" type="email" placeholder="nombre de usuario" />
+              </div>
+              <div className="mb-3">
                 <input onChange={(e) => setEmail(e.target.value)} className="form-control" type="email" placeholder="Correo" />
               </div>
               <div className="mb-3">
                 <input onChange={(e) => setPassword(e.target.value)} className="form-control" type="password" placeholder="Contraseña" />
               </div>
               <div className="mb-3">
-                <button onClick={authentication} type="submit" className="btn btn-dark w-100">Iniciar sesión</button>
+                <button onClick={register} type="submit" className="btn btn-dark w-100">Registarse</button>
               </div>
             </form>
             <div>
@@ -88,7 +90,7 @@ const Login = () => {
               }
             </div>
             <div className="mb-3">
-              <Link to="/register" className="ord_link">Crear cuenta</Link>
+              <Link to="/login" className="ord_link">Iniciar sesión</Link>
             </div>
           </div>
         </div>
@@ -99,5 +101,4 @@ const Login = () => {
   )
 }
 
-
-export default Login;
+export default Register;
