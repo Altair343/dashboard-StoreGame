@@ -2,7 +2,10 @@
   display: flex;
   
   .content-logo {
-    color: crimson;
+    &::after{
+      content: "a";
+    }
+    
     @include fromMax(s) {
       display: none;
     }

@@ -7,7 +7,7 @@ const Navigation = () => {
       <nav className="navbar">
         <ul className="nav">
           <div className="content-logo">
-            logo :v
+            
           </div>
           <li className="nav-item">
             <Link className="nav-link" to="/"><i className="fas fa-home"></i>  <span className="text-link ocult">Home</span></Link>
